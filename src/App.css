@@ -111,3 +111,12 @@ span {
   text-decoration: line-through;
   color: #aaa;
 }
+
+.input-edicao {
+  flex: 1;
+  padding: 4px 8px;
+  border: 2px solid #667eea;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+}

@@ -8,6 +8,8 @@ function App() {
   })
   const [texto, setTexto] = useState('')
   const pendentes = tarefas.filter(t => !t.concluida).length
+  const [editandoIndex, setEditandoIndex] = useState(null)
+  const [textoEditado, setTextoEditado] = useState('')
   useEffect(() => {
     localStorage.setItem('tarefas', JSON.stringify(tarefas))
   }, [tarefas])
@@ -28,6 +30,20 @@ function App() {
     )
     setTarefas(novaLista)
   }
+  function iniciarEdicao(index) {
+    setEditandoIndex(index)
+    setTextoEditado(tarefas[index].texto)
+  }
+
+  function salvarEdicao(index) {
+    if (textoEditado.trim() === '') return
+    const novaLista = tarefas.map((tarefa, i) =>
+      i === index ? { ...tarefa, texto: textoEditado } : tarefa
+    )
+    setTarefas(novaLista)
+    setEditandoIndex(null)
+    setTextoEditado('')
+  }
 
   return (
     <div className="container">
@@ -47,12 +63,24 @@ function App() {
       <ul>
         {tarefas.map((tarefa, index) => (
           <li key={index}>
-            <span
-              onClick={() => concluirTarefa(index)}
-              className={tarefa.concluida ? 'concluida' : ''}
-            >
-              {tarefa.texto}
-            </span>
+            {editandoIndex === index ? (
+              <input
+                className="input-edicao"
+                value={textoEditado}
+                onChange={(e) => setTextoEditado(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && salvarEdicao(index)}
+                onBlur={() => salvarEdicao(index)}
+                autoFocus
+              />
+            ) : (
+              <span
+                onClick={() => concluirTarefa(index)}
+                onDoubleClick={() => iniciarEdicao(index)}
+                className={tarefa.concluida ? 'concluida' : ''}
+              >
+                {tarefa.texto}
+              </span>
+            )}
             <button className="delete" onClick={() => removerTarefa(index)}>
               Remover
             </button>
