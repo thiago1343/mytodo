@@ -5,50 +5,69 @@
 }
 
 body {
-  font-family: sans-serif;
-  background: #f0f0f0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 40px;
+  align-items: flex-start;
+  padding: 40px 16px;
 }
 
 .container {
   background: white;
-  padding: 24px;
-  border-radius: 8px;
-  width: 400px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 32px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
-  margin-bottom: 16px;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .input-area {
   display: flex;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 input {
   flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: #667eea;
 }
 
 button {
-  padding: 8px 16px;
-  background: #4CAF50;
+  padding: 10px 18px;
+  background: #667eea;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+  white-space: nowrap;
 }
 
 button:hover {
-  background: #45a049;
+  background: #5a6fd6;
 }
 
 ul {
@@ -59,21 +78,33 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 8px;
+}
+
+li:last-child {
+  border-bottom: none;
 }
 
 .delete {
-  background: #e53935;
-  padding: 4px 10px;
+  background: #ff5252;
+  padding: 6px 12px;
   font-size: 12px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .delete:hover {
-  background: #c62828;
+  background: #e53935;
 }
+
 span {
   cursor: pointer;
+  flex: 1;
+  font-size: 15px;
+  color: #444;
+  transition: color 0.2s;
 }
 
 .concluida {
