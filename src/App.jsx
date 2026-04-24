@@ -1,4 +1,7 @@
-import { useState , useEffect} from 'react'
+import { useState, useEffect } from 'react'
+import { DndContext, closestCenter } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
+import TarefaItem from './TarefaItem'
 import './App.css'
 
 function App() {
@@ -17,7 +20,7 @@ function App() {
 
   function adicionarTarefa() {
     if (texto.trim() === '') return
-    setTarefas([...tarefas, { texto, concluida: false, prioridade }])
+    setTarefas([...tarefas, { id: Date.now(), texto, concluida: false, prioridade }])
     setTexto('')
   }
 
@@ -45,59 +48,54 @@ function App() {
     setEditandoIndex(null)
     setTextoEditado('')
   }
-
+  function handleDragEnd(event) {
+    const { active, over } = event
+    if (active.id !== over?.id) {
+      const oldIndex = tarefas.findIndex(t => t.id === active.id)
+      const newIndex = tarefas.findIndex(t => t.id === over.id)
+      setTarefas(arrayMove(tarefas, oldIndex, newIndex))
+    }
+  }
   return (
     <div className="container">
       <h1>Meu TodoList <span style={{ fontSize: '14px', color: '#888' }}>({pendentes} pendente{pendentes !== 1 ? 's' : ''})</span></h1>
 
       <div className="input-area">
-  <input
-    type="text"
-    placeholder="Digite uma tarefa..."
-    value={texto}
-    onChange={(e) => setTexto(e.target.value)}
-    onKeyDown={(e) => e.key === 'Enter' && adicionarTarefa()}
-  />
-  <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
-    <option value="alta">🔴 Alta</option>
-    <option value="media">🟡 Média</option>
-    <option value="baixa">🟢 Baixa</option>
-  </select>
-  <button onClick={adicionarTarefa}>Adicionar</button>
-</div>
+        <input
+          type="text"
+          placeholder="Digite uma tarefa..."
+          value={texto}
+          onChange={(e) => setTexto(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && adicionarTarefa()}
+        />
+        <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
+          <option value="alta">🔴 Alta</option>
+          <option value="media">🟡 Média</option>
+          <option value="baixa">🟢 Baixa</option>
+        </select>
+        <button onClick={adicionarTarefa}>Adicionar</button>
+      </div>
 
-      <ul>
-        {tarefas.map((tarefa, index) => (
-          <li key={index}>
-            {editandoIndex === index ? (
-              <input
-                className="input-edicao"
-                value={textoEditado}
-                onChange={(e) => setTextoEditado(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && salvarEdicao(index)}
-                onBlur={() => salvarEdicao(index)}
-                autoFocus
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={tarefas.map(t => t.id)} strategy={verticalListSortingStrategy}>
+          <ul>
+            {tarefas.map((tarefa, index) => (
+              <TarefaItem
+                key={tarefa.id}
+                tarefa={tarefa}
+                index={index}
+                editandoIndex={editandoIndex}
+                textoEditado={textoEditado}
+                setTextoEditado={setTextoEditado}
+                concluirTarefa={concluirTarefa}
+                iniciarEdicao={iniciarEdicao}
+                salvarEdicao={salvarEdicao}
+                removerTarefa={removerTarefa}
               />
-            ) : (
-              <>
-                <span className={`badge ${tarefa.prioridade}`}>
-                  {tarefa.prioridade}
-                </span>
-                <span
-                onClick={() => concluirTarefa(index)}
-                onDoubleClick={() => iniciarEdicao(index)}
-                className={tarefa.concluida ? 'concluida' : ''}
-              >
-                {tarefa.texto}
-                </span>
-              </>
-            )}
-            <button className="delete" onClick={() => removerTarefa(index)}>
-              Remover
-            </button>
-          </li>
-        ))}
-      </ul>
+            ))}
+          </ul>
+        </SortableContext>
+      </DndContext>
     </div>
   )
 }

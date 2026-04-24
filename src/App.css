@@ -152,3 +152,15 @@ select {
   background: #e8f5e9;
   color: #43a047;
 }
+
+.drag-handle {
+  cursor: grab;
+  font-size: 18px;
+  color: #bbb;
+  padding-right: 8px;
+  flex-shrink: 0;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
