@@ -120,3 +120,35 @@ span {
   font-size: 15px;
   outline: none;
 }
+select {
+  padding: 10px 8px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.badge.alta {
+  background: #fde8e8;
+  color: #e53935;
+}
+
+.badge.media {
+  background: #fff8e1;
+  color: #f9a825;
+}
+
+.badge.baixa {
+  background: #e8f5e9;
+  color: #43a047;
+}
