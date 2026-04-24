@@ -72,3 +72,11 @@ li {
 .delete:hover {
   background: #c62828;
 }
+span {
+  cursor: pointer;
+}
+
+.concluida {
+  text-decoration: line-through;
+  color: #aaa;
+}

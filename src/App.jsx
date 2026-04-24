@@ -7,12 +7,18 @@ function App() {
 
   function adicionarTarefa() {
     if (texto.trim() === '') return
-    setTarefas([...tarefas, texto])
+    setTarefas([...tarefas, { texto, concluida: false }])
     setTexto('')
   }
 
   function removerTarefa(index) {
     const novaLista = tarefas.filter((_, i) => i !== index)
+    setTarefas(novaLista)
+  }
+  function concluirTarefa(index) {
+    const novaLista = tarefas.map((tarefa, i) =>
+      i === index ? { ...tarefa, concluida: !tarefa.concluida } : tarefa
+    )
     setTarefas(novaLista)
   }
 
@@ -33,7 +39,12 @@ function App() {
       <ul>
         {tarefas.map((tarefa, index) => (
           <li key={index}>
-            {tarefa}
+            <span
+              onClick={() => concluirTarefa(index)}
+              className={tarefa.concluida ? 'concluida' : ''}
+            >
+              {tarefa.texto}
+            </span>
             <button className="delete" onClick={() => removerTarefa(index)}>
               Remover
             </button>
