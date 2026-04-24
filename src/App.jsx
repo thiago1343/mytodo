@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import './App.css'
 
 function App() {
-  const [tarefas, setTarefas] = useState([])
+  const [tarefas, setTarefas] = useState(() => {
+    const salvo = localStorage.getItem('tarefas')
+    return salvo ? JSON.parse(salvo) : []
+  })
   const [texto, setTexto] = useState('')
   const pendentes = tarefas.filter(t => !t.concluida).length
+  useEffect(() => {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
+  }, [tarefas])
 
   function adicionarTarefa() {
     if (texto.trim() === '') return
