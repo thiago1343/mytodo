@@ -36,10 +36,79 @@ h1 {
 }
 
 .input-area {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
+  display: none;
 }
+
+.fab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #1e1e2e;
+  color: white;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  padding: 0;
+  margin-top: 20px;
+  margin-left: auto;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.fab:hover {
+  background: #333;
+  transform: scale(1.08);
+}
+
+.inline-form-wrapper {
+  margin-top: 16px;
+}
+
+.inline-form {
+  background: #f8f8ff;
+  border: 1px solid #e0e0f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.inline-form input,
+.inline-form select {
+  width: 100%;
+}
+
+.inline-form-botoes {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-cancelar {
+  background: #f0f0f0;
+  color: #555;
+  flex: 1;
+}
+
+.btn-cancelar:hover {
+  background: #e0e0e0;
+}
+
+.inline-form-botoes button:last-child {
+  flex: 2;
+}
+
 
 input {
   flex: 1;

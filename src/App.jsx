@@ -18,6 +18,7 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
   const [prioridade, setPrioridade] = useState('media')
   const [nome, setNome] = useState(() => localStorage.getItem('nome') || '')
   const [menuAbertoIndex, setMenuAbertoIndex] = useState(null)
+  const [modalAberto, setModalAberto] = useState(false)
   useEffect(() => {
     localStorage.setItem('tarefas', JSON.stringify(tarefas))
   }, [tarefas])
@@ -28,6 +29,7 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
     if (texto.trim() === '') return
     setTarefas([...tarefas, { id: Date.now(), texto, concluida: false, prioridade }])
     setTexto('')
+    setModalAberto(false)
   }
 
   function removerTarefa(index) {
@@ -120,22 +122,6 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
         </div>
       )}
 
-      <div className="input-area">
-        <input
-          type="text"
-          placeholder="Digite uma tarefa..."
-          value={texto}
-          onChange={(e) => setTexto(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && adicionarTarefa()}
-        />
-        <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
-          <option value="alta">🔴 Alta</option>
-          <option value="media">🟡 Média</option>
-          <option value="baixa">🟢 Baixa</option>
-        </select>
-        <button onClick={adicionarTarefa}>Adicionar</button>
-      </div>
-
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
         <SortableContext items={tarefas.map(t => t.id)} strategy={verticalListSortingStrategy}>
           <div className="tarefas-card">
@@ -160,6 +146,32 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
           </div>
         </SortableContext>
       </DndContext>
+
+      <div className="inline-form-wrapper">
+        {modalAberto ? (
+          <div className="inline-form">
+            <input
+              type="text"
+              placeholder="Digite uma tarefa..."
+              value={texto}
+              onChange={(e) => setTexto(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && adicionarTarefa()}
+              autoFocus
+            />
+            <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)}>
+              <option value="alta">🔴 Alta</option>
+              <option value="media">🟡 Média</option>
+              <option value="baixa">🟢 Baixa</option>
+            </select>
+            <div className="inline-form-botoes">
+              <button className="btn-cancelar" onClick={() => setModalAberto(false)}>Cancelar</button>
+              <button onClick={adicionarTarefa}>Adicionar</button>
+            </div>
+          </div>
+        ) : (
+          <button className="fab" onClick={() => setModalAberto(true)}>+</button>
+        )}
+      </div>
     </div>
   )
 }
