@@ -11,13 +11,18 @@ function App() {
   })
   const [texto, setTexto] = useState('')
   const pendentes = tarefas.filter(t => !t.concluida).length
+  const total = tarefas.length
+const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida).length / total) * 100)
   const [editandoIndex, setEditandoIndex] = useState(null)
   const [textoEditado, setTextoEditado] = useState('')
   const [prioridade, setPrioridade] = useState('media')
+  const [nome, setNome] = useState(() => localStorage.getItem('nome') || '')
   useEffect(() => {
     localStorage.setItem('tarefas', JSON.stringify(tarefas))
   }, [tarefas])
-
+  useEffect(() => {
+    localStorage.setItem('nome', nome)
+  }, [nome])
   function adicionarTarefa() {
     if (texto.trim() === '') return
     setTarefas([...tarefas, { id: Date.now(), texto, concluida: false, prioridade }])
@@ -67,7 +72,43 @@ function App() {
   )
   return (
     <div className="container">
-      <h1>Resh <span style={{ fontSize: '14px', color: '#888' }}>({pendentes} pendente{pendentes !== 1 ? 's' : ''})</span></h1>
+      <div className="header">
+        <div>
+          {nome ? (
+            <h1>Olá, {nome}! 👋</h1>
+          ) : (
+            <h1>Resh</h1>
+          )}
+          <p className="subtitulo">Vamos fazer acontecer hoje.</p>
+        </div>
+        <div className="header-meta">
+          <span className="pendentes-badge">{pendentes} pendente{pendentes !== 1 ? 's' : ''}</span>
+          {!nome && (
+            <input
+              className="input-nome"
+              placeholder="Qual é o seu nome?"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && e.target.value.trim()) {
+                  setNome(e.target.value.trim())
+                }
+              }}
+            />
+          )}
+        </div>
+      </div>
+
+      {total > 0 && (
+        <div className="progress-card">
+          <div className="progress-info">
+            <span className="progress-pct">{progresso}%</span>
+            <span className="progress-label">concluídas</span>
+          </div>
+          <div className="progress-bar-bg">
+            <div className="progress-bar-fill" style={{ width: `${progresso}%` }}></div>
+          </div>
+          <span className="progress-count">{tarefas.filter(t => t.concluida).length} de {total}</span>
+        </div>
+      )}
 
       <div className="input-area">
         <input
