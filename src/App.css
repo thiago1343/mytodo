@@ -281,3 +281,17 @@ html, body {
   font-size: 12px;
   color: #aaa;
 }
+
+.nome-area {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.nome-area .input-nome {
+  flex: 1;
+}
+
+.nome-area button {
+  padding: 8px 14px;
+}
