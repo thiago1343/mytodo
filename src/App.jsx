@@ -84,23 +84,23 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
         <div className="header-meta">
           <span className="pendentes-badge">{pendentes} pendente{pendentes !== 1 ? 's' : ''}</span>
           {!nome && (
-  <div className="nome-area">
-    <input
-      className="input-nome"
-      placeholder="Qual é o seu nome?"
-      id="inputNome"
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' && e.target.value.trim()) {
-          setNome(e.target.value.trim())
-        }
-      }}
-    />
-    <button onClick={() => {
-      const val = document.getElementById('inputNome').value.trim()
-      if (val) setNome(val)
-    }}>OK</button>
-  </div>
-)}
+            <div className="nome-area">
+              <input
+                className="input-nome"
+                placeholder="Qual é o seu nome?"
+                id="inputNome"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && e.target.value.trim()) {
+                    setNome(e.target.value.trim())
+                  }
+                }}
+              />
+              <button onClick={() => {
+                const val = document.getElementById('inputNome').value.trim()
+                if (val) setNome(val)
+              }}>OK</button>
+            </div>
+          )}
         </div>
       </div>
 

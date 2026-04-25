@@ -295,3 +295,9 @@ html, body {
 .nome-area button {
   padding: 8px 14px;
 }
+.logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
