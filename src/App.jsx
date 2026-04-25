@@ -67,7 +67,7 @@ function App() {
   )
   return (
     <div className="container">
-      <h1>Meu TodoList <span style={{ fontSize: '14px', color: '#888' }}>({pendentes} pendente{pendentes !== 1 ? 's' : ''})</span></h1>
+      <h1>Resh <span style={{ fontSize: '14px', color: '#888' }}>({pendentes} pendente{pendentes !== 1 ? 's' : ''})</span></h1>
 
       <div className="input-area">
         <input
