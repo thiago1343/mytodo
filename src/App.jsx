@@ -138,7 +138,8 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
 
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
         <SortableContext items={tarefas.map(t => t.id)} strategy={verticalListSortingStrategy}>
-          <ul>
+          <div className="tarefas-card">
+            <ul>
             {tarefas.map((tarefa, index) => (
               <TarefaItem
                 key={tarefa.id}
@@ -155,7 +156,8 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
               setMenuAbertoIndex={setMenuAbertoIndex}
               />
             ))}
-          </ul>
+            </ul>
+          </div>
         </SortableContext>
       </DndContext>
     </div>
