@@ -300,4 +300,15 @@ html, body {
   height: 48px;
   object-fit: contain;
   margin-bottom: 8px;
+  display: block;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
 }
+
+.header-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+

@@ -74,13 +74,16 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
     <div className="container">
       <div className="header">
         <div>
-          {nome ? (
-            <h1>Olá, {nome}! 👋</h1>
-          ) : (
-            <h1>Resh</h1>
-          )}
-          <p className="subtitulo">Vamos fazer acontecer hoje.</p>
-        </div>
+  <div className="header-titulo">
+    {nome ? (
+      <h1>Olá, {nome}! 👋</h1>
+    ) : (
+      <h1>Resh</h1>
+    )}
+    <img src="/logo.png" alt="Resh logo" className="logo" />
+  </div>
+  <p className="subtitulo">Vamos fazer acontecer hoje.</p>
+</div>
         <div className="header-meta">
           <span className="pendentes-badge">{pendentes} pendente{pendentes !== 1 ? 's' : ''}</span>
           {!nome && (
