@@ -20,10 +20,7 @@ function TarefaItem({
   }
 
   return (
-    <li ref={setNodeRef} style={style}>
-      <span className="drag-handle" {...attributes} {...listeners}>
-        ⠿
-      </span>
+    <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
       {editandoIndex === index ? (
         <input
           className="input-edicao"
@@ -35,11 +32,14 @@ function TarefaItem({
         />
       ) : (
         <>
-          <span className={`badge ${tarefa.prioridade}`}>
-            {tarefa.prioridade}
-          </span>
-          <span
+          <button
+            className={`check-btn ${tarefa.concluida ? 'checked' : ''}`}
             onClick={() => concluirTarefa(index)}
+            onPointerDown={(e) => e.stopPropagation()}
+            title="Marcar como concluída"
+          />
+          <span className={`badge ${tarefa.prioridade}`} title={tarefa.prioridade} />
+          <span
             onDoubleClick={() => iniciarEdicao(index)}
             className={tarefa.concluida ? 'concluida' : ''}
           >

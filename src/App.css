@@ -94,8 +94,8 @@ li:last-child {
 
 .delete {
   background: #ff5252;
-  padding: 6px 12px;
-  font-size: 12px;
+  padding: 4px 8px;
+  font-size: 11px;
   border-radius: 6px;
   flex-shrink: 0;
 }
@@ -107,14 +107,23 @@ li:last-child {
 span {
   cursor: pointer;
   flex: 1;
-  font-size: 15px;
+  font-size: 14px;
   color: #444;
   transition: color 0.2s;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .concluida {
   text-decoration: line-through;
   color: #aaa;
+}
+
+li > span {
+  flex: 1;
+  text-align: left;
 }
 
 .input-edicao {
@@ -135,34 +144,62 @@ select {
 }
 
 .badge {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
+  display: block;
+  min-width: 10px;
+  max-width: 10px;
+  min-height: 10px;
+  max-height: 10px;
+  border-radius: 50%;
   flex-shrink: 0;
+  align-self: center;
+}
+
+.check-btn {
+  display: block;
+  min-width: 18px;
+  max-width: 18px;
+  min-height: 18px;
+  max-height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  align-self: center;
+  padding: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.check-btn:hover {
+  border-color: #6c63ff;
+}
+
+.check-btn.checked {
+  background: #6c63ff;
+  border-color: #6c63ff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2.5 2.5L8 3' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
 }
 
 .badge.alta {
-  background: #fde8e8;
-  color: #e53935;
+  background: #e53935;
 }
 
 .badge.media {
-  background: #fff8e1;
-  color: #f9a825;
+  background: #f9a825;
 }
 
 .badge.baixa {
-  background: #e8f5e9;
-  color: #43a047;
+  background: #43a047;
 }
 
 .drag-handle {
   cursor: grab;
-  font-size: 18px;
-  color: #bbb;
-  padding-right: 8px;
+  font-size: 14px;
+  color: #ccc;
+  padding-right: 4px;
   flex-shrink: 0;
 }
 
@@ -214,7 +251,7 @@ html, body {
 }
 
 .header h1 {
-  font-size: 22px;
+  font-size: 18px;
   color: #333;
   margin-bottom: 4px;
 }
