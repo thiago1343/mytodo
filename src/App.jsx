@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { DndContext, closestCenter } from '@dnd-kit/core'
+import { DndContext, closestCenter, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
 import TarefaItem from './TarefaItem'
 import './App.css'
@@ -56,6 +56,15 @@ function App() {
       setTarefas(arrayMove(tarefas, oldIndex, newIndex))
     }
   }
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    })
+  )
   return (
     <div className="container">
       <h1>Meu TodoList <span style={{ fontSize: '14px', color: '#888' }}>({pendentes} pendente{pendentes !== 1 ? 's' : ''})</span></h1>
@@ -76,7 +85,7 @@ function App() {
         <button onClick={adicionarTarefa}>Adicionar</button>
       </div>
 
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
         <SortableContext items={tarefas.map(t => t.id)} strategy={verticalListSortingStrategy}>
           <ul>
             {tarefas.map((tarefa, index) => (
