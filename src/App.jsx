@@ -17,6 +17,7 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
   const [textoEditado, setTextoEditado] = useState('')
   const [prioridade, setPrioridade] = useState('media')
   const [nome, setNome] = useState(() => localStorage.getItem('nome') || '')
+  const [menuAbertoIndex, setMenuAbertoIndex] = useState(null)
   useEffect(() => {
     localStorage.setItem('tarefas', JSON.stringify(tarefas))
   }, [tarefas])
@@ -106,7 +107,6 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
           )}
         </div>
       </div>
-
       {total > 0 && (
         <div className="progress-card">
           <div className="progress-info">
@@ -151,6 +151,8 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
                 iniciarEdicao={iniciarEdicao}
                 salvarEdicao={salvarEdicao}
                 removerTarefa={removerTarefa}
+              menuAbertoIndex={menuAbertoIndex}
+              setMenuAbertoIndex={setMenuAbertoIndex}
               />
             ))}
           </ul>

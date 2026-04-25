@@ -1,5 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useRef, useEffect } from 'react'
 
 function TarefaItem({
   tarefa,
@@ -11,13 +12,27 @@ function TarefaItem({
   iniciarEdicao,
   salvarEdicao,
   removerTarefa,
+  menuAbertoIndex,
+  setMenuAbertoIndex,
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: tarefa.id })
+  const menuAberto = menuAbertoIndex === index
+  const menuRef = useRef(null)
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   }
+
+  useEffect(() => {
+    function fecharFora(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuAbertoIndex(null)
+      }
+    }
+    if (menuAberto) document.addEventListener('pointerdown', fecharFora)
+    return () => document.removeEventListener('pointerdown', fecharFora)
+  }, [menuAberto])
 
   return (
     <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
@@ -47,9 +62,33 @@ function TarefaItem({
           </span>
         </>
       )}
-      <button className="delete" onClick={() => removerTarefa(index)}>
-        Remover
-      </button>
+      <div className="menu-wrapper" ref={menuRef}>
+        <button
+          className="menu-btn"
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={() => setMenuAbertoIndex(menuAberto ? null : index)}
+          title="Opções"
+        >
+          ⋮
+        </button>
+        {menuAberto && (
+          <div className="menu-dropdown">
+            <button
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={() => { iniciarEdicao(index); setMenuAbertoIndex(null) }}
+            >
+              ✏️ Editar
+            </button>
+            <button
+              className="menu-remover"
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={() => { removerTarefa(index); setMenuAbertoIndex(null) }}
+            >
+              🗑️ Remover
+            </button>
+          </div>
+        )}
+      </div>
     </li>
   )
 }
