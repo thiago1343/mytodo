@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 body {
@@ -47,6 +49,8 @@ input {
   font-size: 14px;
   outline: none;
   transition: border-color 0.2s;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 input:focus {
