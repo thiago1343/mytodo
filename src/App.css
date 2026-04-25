@@ -164,3 +164,40 @@ select {
 .drag-handle:active {
   cursor: grabbing;
 }
+
+@media (max-width: 480px) {
+  body {
+    padding: 16px 12px;
+  }
+
+  .container {
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .input-area {
+    flex-wrap: wrap;
+  }
+
+  .input-area input {
+    width: 100%;
+    flex: none;
+  }
+
+  .input-area select {
+    flex: 1;
+  }
+
+  .input-area button {
+    flex: 1;
+  }
+
+  li {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
