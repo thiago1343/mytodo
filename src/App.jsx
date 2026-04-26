@@ -19,6 +19,7 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
   const [nome, setNome] = useState(() => localStorage.getItem('nome') || '')
   const [menuAbertoIndex, setMenuAbertoIndex] = useState(null)
   const [modalAberto, setModalAberto] = useState(false)
+  const [notificacoes, setNotificacoes] = useState(true)
   const [weatherMsg, setWeatherMsg] = useState('A carregar tempo...')
   const [weatherEmoji, setWeatherEmoji] = useState('🌤️')
 
@@ -141,6 +142,17 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
     ) : (
       <h1>Resh</h1>
     )}
+    <button
+      className={`bell-btn ${notificacoes ? 'bell-on' : 'bell-off'}`}
+      onClick={() => setNotificacoes((v) => !v)}
+      title={notificacoes ? 'Desativar notificações' : 'Ativar notificações'}
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        {notificacoes && <circle cx="18" cy="6" r="3" fill="#6b7280" stroke="white" strokeWidth="1.5"/>}
+      </svg>
+    </button>
   </div>
   <p className="subtitulo">Vamos fazer acontecer hoje.</p>
 </div>
