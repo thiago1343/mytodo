@@ -538,6 +538,173 @@ html, body {
   border-radius: 50%;
 }
 
+/* ── Foco ── */
+.foco-page {
+  padding: 8px 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.foco-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e1e2e;
+  align-self: flex-start;
+}
+
+.foco-modo-tabs {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.foco-tab {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #aaa;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.foco-tab-ativo {
+  border-color: #667eea;
+  color: #667eea;
+  background: #f0f0ff;
+}
+
+.foco-relogio {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+}
+
+.foco-tempo {
+  position: absolute;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e1e2e;
+  letter-spacing: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -58%);
+}
+
+.foco-modo-label {
+  position: absolute;
+  font-size: 12px;
+  color: #aaa;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 60%);
+}
+
+.foco-botoes {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.foco-btn-play {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(102,126,234,0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.foco-btn-play:hover {
+  transform: scale(1.07);
+}
+
+.foco-btn-reset {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.foco-btn-reset:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.foco-ciclos {
+  font-size: 14px;
+  color: #888;
+  font-weight: 500;
+}
+
+.foco-musica {
+  width: 100%;
+  background: #f8f8ff;
+  border: 1px solid #e0e0f0;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.foco-musica-titulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 12px;
+}
+
+.foco-musica-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.foco-musica-btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.foco-musica-btn:hover {
+  opacity: 0.85;
+}
+
+.foco-musica-btn.spotify {
+  background: #1db954;
+  color: white;
+}
+
+.foco-musica-btn.youtube {
+  background: #ff0000;
+  color: white;
+}
+
 .weather-emoji {
   font-size: 18px;
   line-height: 1.4;

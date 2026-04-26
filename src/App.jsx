@@ -3,6 +3,7 @@ import { DndContext, closestCenter, PointerSensor, TouchSensor, useSensor, useSe
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
 import TarefaItem from './TarefaItem'
 import Calendario from './Calendario'
+import Foco from './Foco'
 import './App.css'
 
 function App() {
@@ -170,6 +171,8 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
 
       {tabAtiva === 'agenda' ? (
         <Calendario />
+      ) : tabAtiva === 'foco' ? (
+        <Foco />
       ) : (
         <>
         <div className="header-meta">
