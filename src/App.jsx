@@ -30,19 +30,34 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
   }
 
   useEffect(() => {
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=38.72&longitude=-9.14&current=temperature_2m,rain,showers')
-      .then((res) => res.json())
-      .then((data) => {
-        const temp = data.current.temperature_2m
-        const rain = data.current.rain
-        const { msg, emoji } = getWeatherMessage(temp, rain)
-        setWeatherMsg(msg)
-        setWeatherEmoji(emoji)
-      })
-      .catch(() => {
-        setWeatherMsg('Não foi possível carregar o tempo.')
-        setWeatherEmoji('❓')
-      })
+    if (!navigator.geolocation) {
+      setWeatherMsg('Geolocalização não suportada neste dispositivo.')
+      setWeatherEmoji('❓')
+      return
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,rain,showers`)
+          .then((res) => res.json())
+          .then((data) => {
+            const temp = data.current.temperature_2m
+            const rain = data.current.rain
+            const { msg, emoji } = getWeatherMessage(temp, rain)
+            setWeatherMsg(msg)
+            setWeatherEmoji(emoji)
+          })
+          .catch(() => {
+            setWeatherMsg('Não foi possível carregar o tempo.')
+            setWeatherEmoji('❓')
+          })
+      },
+      () => {
+        setWeatherMsg('Permissão de localização negada.')
+        setWeatherEmoji('📍')
+      }
+    )
   }, [])
 
   useEffect(() => {
