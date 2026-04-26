@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: #f2f2f7;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -17,12 +17,12 @@ body {
 }
 
 .container {
-  background: white;
+  background: #f2f2f7;
   padding: 32px;
   border-radius: 16px;
   width: 100%;
   max-width: 480px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 h1 {
@@ -334,18 +334,21 @@ select {
 
 @media (max-width: 480px) {
   body {
-    padding: 24px 20px;
+    padding: 0;
+    background: #f2f2f7;
     align-items: flex-start;
   }
 
   .container {
-    padding: 20px 16px;
-    border-radius: 12px;
-    margin: 0 4px;
+    padding: 24px 16px 100px;
+    border-radius: 0;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
   }
 
   .tarefas-card {
-    margin: 0 4px;
+    margin: 0;
   }
 
   h1 {
@@ -370,8 +373,8 @@ select {
   }
 
   li {
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-wrap: nowrap;
+    gap: 8px;
   }
 }
 html, body {
