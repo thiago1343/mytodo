@@ -19,6 +19,32 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
   const [nome, setNome] = useState(() => localStorage.getItem('nome') || '')
   const [menuAbertoIndex, setMenuAbertoIndex] = useState(null)
   const [modalAberto, setModalAberto] = useState(false)
+  const [weatherMsg, setWeatherMsg] = useState('A carregar tempo...')
+  const [weatherEmoji, setWeatherEmoji] = useState('🌤️')
+
+  function getWeatherMessage(temp, rain) {
+    if (rain > 0) return { msg: 'Hoje é um ótimo dia para focar em tarefas dentro de casa.', emoji: '🌧️' }
+    if (temp > 25) return { msg: 'Dia quente! Tente concluir as tarefas mais importantes cedo.', emoji: '☀️' }
+    if (temp < 10) return { msg: 'Dia frio. Perfeito para trabalho focado e concentrado.', emoji: '❄️' }
+    return { msg: 'Tempo agradável na tua cidade! Ótimo dia para ser produtivo.', emoji: '🌤️' }
+  }
+
+  useEffect(() => {
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=38.72&longitude=-9.14&current=temperature_2m,rain,showers')
+      .then((res) => res.json())
+      .then((data) => {
+        const temp = data.current.temperature_2m
+        const rain = data.current.rain
+        const { msg, emoji } = getWeatherMessage(temp, rain)
+        setWeatherMsg(msg)
+        setWeatherEmoji(emoji)
+      })
+      .catch(() => {
+        setWeatherMsg('Não foi possível carregar o tempo.')
+        setWeatherEmoji('❓')
+      })
+  }, [])
+
   useEffect(() => {
     localStorage.setItem('tarefas', JSON.stringify(tarefas))
   }, [tarefas])
@@ -87,6 +113,10 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
   </div>
   <p className="subtitulo">Vamos fazer acontecer hoje.</p>
 </div>
+      <div className="weather-banner">
+        <span className="weather-emoji">{weatherEmoji}</span>
+        <span className="weather-text">{weatherMsg}</span>
+      </div>
         <div className="header-meta">
           <span className="pendentes-badge">{pendentes} pendente{pendentes !== 1 ? 's' : ''}</span>
           {!nome && (

@@ -393,6 +393,36 @@ html, body {
   margin-bottom: 8px;
 }
 
+.weather-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #f5f5ff;
+  border: 1px solid #e0e0f8;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.weather-emoji {
+  font-size: 18px;
+  line-height: 1.4;
+  flex: none;
+  flex-shrink: 0;
+}
+
+.weather-text {
+  font-size: 13px;
+  color: #555;
+  flex: 1;
+  text-align: left;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.4;
+}
+
 .pendentes-badge {
   font-size: 12px;
   background: #f0f0ff;
