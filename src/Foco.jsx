@@ -8,12 +8,93 @@ const MODOS = {
 const RAIO = 54
 const CIRCUNFERENCIA = 2 * Math.PI * RAIO
 
+const SONS = [
+  { id: 'chuva', label: '🌧️ Chuva' },
+  { id: 'ondas', label: '🌊 Ondas' },
+  { id: 'foco', label: '🎵 Tom Foco' },
+]
+
+function criarChuva(ctx) {
+  const buffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate)
+  const data = buffer.getChannelData(0)
+  let ultimo = 0
+  for (let i = 0; i < data.length; i++) {
+    const branco = Math.random() * 2 - 1
+    ultimo = (ultimo + 0.02 * branco) / 1.02
+    data[i] = ultimo * 3.5
+  }
+  const source = ctx.createBufferSource()
+  source.buffer = buffer
+  source.loop = true
+  const filtro = ctx.createBiquadFilter()
+  filtro.type = 'lowpass'
+  filtro.frequency.value = 600
+  const gain = ctx.createGain()
+  gain.gain.value = 0.7
+  source.connect(filtro)
+  filtro.connect(gain)
+  gain.connect(ctx.destination)
+  source.start()
+  return { source, gain }
+}
+
+function criarOndas(ctx) {
+  const osc1 = ctx.createOscillator()
+  const osc2 = ctx.createOscillator()
+  osc1.type = 'sine'
+  osc2.type = 'sine'
+  osc1.frequency.value = 0.1
+  osc2.frequency.value = 0.15
+  const gain = ctx.createGain()
+  gain.gain.value = 0.3
+  const filtro = ctx.createBiquadFilter()
+  filtro.type = 'lowpass'
+  filtro.frequency.value = 400
+
+  const bufferNoise = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate)
+  const data = bufferNoise.getChannelData(0)
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1
+  const noise = ctx.createBufferSource()
+  noise.buffer = bufferNoise
+  noise.loop = true
+
+  const gainMod = ctx.createGain()
+  gainMod.gain.value = 0.5
+  osc1.connect(gainMod.gain)
+  osc2.connect(gainMod.gain)
+  noise.connect(gainMod)
+  gainMod.connect(filtro)
+  filtro.connect(gain)
+  gain.connect(ctx.destination)
+
+  osc1.start(); osc2.start(); noise.start()
+  return { source: noise, osc1, osc2, gain }
+}
+
+function criarFoco(ctx) {
+  const osc = ctx.createOscillator()
+  osc.type = 'sine'
+  osc.frequency.value = 200
+  const osc2 = ctx.createOscillator()
+  osc2.type = 'sine'
+  osc2.frequency.value = 240
+  const gain = ctx.createGain()
+  gain.gain.value = 0.12
+  osc.connect(gain)
+  osc2.connect(gain)
+  gain.connect(ctx.destination)
+  osc.start(); osc2.start()
+  return { source: osc, osc2, gain }
+}
+
 function Foco() {
   const [modo, setModo] = useState('foco')
   const [segundosRestantes, setSegundosRestantes] = useState(MODOS.foco.segundos)
   const [ativo, setAtivo] = useState(false)
   const [ciclos, setCiclos] = useState(0)
+  const [somAtivo, setSomAtivo] = useState(null)
   const intervaloRef = useRef(null)
+  const audioRef = useRef(null)
 
   const total = MODOS[modo].segundos
   const progresso = segundosRestantes / total
@@ -42,6 +123,36 @@ function Foco() {
     }
     return () => clearInterval(intervaloRef.current)
   }, [ativo, modo])
+
+  function pararSom() {
+    if (audioRef.current) {
+      try {
+        const { source, osc1, osc2 } = audioRef.current
+        source?.stop?.()
+        osc1?.stop?.()
+        osc2?.stop?.()
+        audioRef.current.ctx?.close()
+      } catch (_) {}
+      audioRef.current = null
+    }
+    setSomAtivo(null)
+  }
+
+  function tocarSom(id) {
+    pararSom()
+    if (somAtivo === id) return
+
+    const ctx = new (window.AudioContext || window.webkitAudioContext)()
+    let nos
+    if (id === 'chuva') nos = criarChuva(ctx)
+    else if (id === 'ondas') nos = criarOndas(ctx)
+    else nos = criarFoco(ctx)
+
+    audioRef.current = { ...nos, ctx }
+    setSomAtivo(id)
+  }
+
+  useEffect(() => () => pararSom(), [])
 
   function trocarModo(novoModo) {
     setAtivo(false)
@@ -112,24 +223,18 @@ function Foco() {
       )}
 
       <div className="foco-musica">
-        <p className="foco-musica-titulo">🎵 Música para focar</p>
-        <div className="foco-musica-links">
-          <a
-            href="https://open.spotify.com/playlist/37i9dQZF1DWZeKCadgRdKQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="foco-musica-btn spotify"
-          >
-            Spotify — Deep Focus
-          </a>
-          <a
-            href="https://www.youtube.com/watch?v=jfKfPfyJRdk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="foco-musica-btn youtube"
-          >
-            YouTube — Lo-fi Radio
-          </a>
+        <p className="foco-musica-titulo">🎵 Sons ambiente</p>
+        <div className="foco-sons-grid">
+          {SONS.map((s) => (
+            <button
+              key={s.id}
+              className={`foco-som-btn ${somAtivo === s.id ? 'foco-som-ativo' : ''}`}
+              onClick={() => tocarSom(s.id)}
+            >
+              {somAtivo === s.id ? '🔊 ' : ''}{s.label}
+              {somAtivo === s.id && <span className="foco-som-parar"> ✕</span>}
+            </button>
+          ))}
         </div>
       </div>
     </div>
