@@ -491,6 +491,53 @@ html, body {
   border-color: #f5dfc0;
 }
 
+.calendario-page {
+  padding: 8px 0 24px;
+}
+
+.calendario-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e1e2e;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.cal-header-dia {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #aaa;
+  padding-bottom: 6px;
+}
+
+.cal-dia {
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 14px;
+  color: #333;
+  border-radius: 50%;
+  cursor: default;
+}
+
+.cal-vazio {
+  visibility: hidden;
+}
+
+.cal-hoje {
+  background: #1e1e2e;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
 .weather-emoji {
   font-size: 18px;
   line-height: 1.4;
