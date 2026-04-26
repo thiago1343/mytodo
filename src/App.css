@@ -405,6 +405,11 @@ html, body {
   margin-bottom: 4px;
 }
 
+.time-banner {
+  background: #fff8f0;
+  border-color: #f5dfc0;
+}
+
 .weather-emoji {
   font-size: 18px;
   line-height: 1.4;

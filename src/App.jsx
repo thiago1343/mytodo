@@ -22,6 +22,23 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
   const [weatherMsg, setWeatherMsg] = useState('A carregar tempo...')
   const [weatherEmoji, setWeatherEmoji] = useState('🌤️')
 
+  function getTimeMessage() {
+    const hora = new Date().getHours()
+    if (hora >= 5 && hora < 12)
+      return { msg: 'Bom dia! Ótima hora para começar as tarefas mais difíceis.', emoji: '🌅' }
+    if (hora >= 12 && hora < 14)
+      return { msg: 'Hora de almoço! Faz uma pausa e volta com energia.', emoji: '🍽️' }
+    if (hora >= 14 && hora < 17)
+      return { msg: 'Tarde ativa! Bom momento para tarefas de concentração.', emoji: '💪' }
+    if (hora >= 17 && hora < 19)
+      return { msg: 'Final de tarde. Vai terminando as tarefas pendentes.', emoji: '🌇' }
+    if (hora >= 19 && hora < 22)
+      return { msg: 'Já estamos quase no fim do dia. Evita conduzir à noite.', emoji: '🌆' }
+    return { msg: 'É tarde! Descansa — amanhã continuas.', emoji: '🌙' }
+  }
+
+  const { msg: timeMsg, emoji: timeEmoji } = getTimeMessage()
+
   function getWeatherMessage(temp, rain) {
     if (rain > 0) return { msg: 'Hoje é um ótimo dia para focar em tarefas dentro de casa.', emoji: '🌧️' }
     if (temp > 25) return { msg: 'Dia quente! Tente concluir as tarefas mais importantes cedo.', emoji: '☀️' }
@@ -124,13 +141,16 @@ const progresso = total === 0 ? 0 : Math.round((tarefas.filter(t => t.concluida)
     ) : (
       <h1>Resh</h1>
     )}
-    <img src="/logo.png" alt="Resh logo" className="logo" />
   </div>
   <p className="subtitulo">Vamos fazer acontecer hoje.</p>
 </div>
       <div className="weather-banner">
         <span className="weather-emoji">{weatherEmoji}</span>
         <span className="weather-text">{weatherMsg}</span>
+      </div>
+      <div className="weather-banner time-banner">
+        <span className="weather-emoji">{timeEmoji}</span>
+        <span className="weather-text">{timeMsg}</span>
       </div>
         <div className="header-meta">
           <span className="pendentes-badge">{pendentes} pendente{pendentes !== 1 ? 's' : ''}</span>
